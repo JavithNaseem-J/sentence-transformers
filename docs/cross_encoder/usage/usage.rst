@@ -9,7 +9,21 @@ Characteristics of Cross Encoder (a.k.a reranker) models:
 3. Often **slower** than a Sentence Transformer model, as it requires computation for each pair rather than each text.
 4. Due to the previous 2 characteristics, Cross Encoders are often used to **re-rank the top-k results** from a Sentence Transformer model.
 
+
 Once you have `installed <../../installation.html>`_ Sentence Transformers, you can easily use Cross Encoder models:
+
+.. note::
+
+   ``CrossEncoder.predict()`` applies the configured ``activation_fn``
+   before returning scores. For models with ``num_labels=1``, the
+   default activation is ``torch.nn.Sigmoid()`` unless overridden.
+   When sigmoid is used, the returned scores are already in the
+   range [0, 1]. Do not apply sigmoid again, as this unnecessarily
+   compresses differences between scores.
+
+   A saved or explicitly configured activation function can override
+   this default. Check ``model.activation_fn`` to see which activation
+   function the model uses.
 
 .. sidebar:: Documentation
 

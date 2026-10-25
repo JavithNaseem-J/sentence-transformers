@@ -29,6 +29,16 @@ scores = model.predict([
 # => array([0.9998173 , 0.01312432], dtype=float32)
 ```
 
+**Note on activation functions:** `CrossEncoder.predict()` applies the
+configured `activation_fn` before returning scores. In the example above,
+sigmoid is explicitly configured, so the returned scores are already in
+the range `[0, 1]`. Applying sigmoid again is unnecessary and compresses
+the differences between scores.
+
+For models with `num_labels=1`, sigmoid is the default activation unless
+a saved or explicitly specified activation function overrides it.
+Check `model.activation_fn` to confirm the activation used by a model.
+
 Cross-Encoders require pairs as inputs and output a score (0 to 1 if the Sigmoid activation function is used). Most models work with text pairs, but some also support non-text inputs such as images (see [Multimodal Rerankers](#multimodal-rerankers)). Cross-Encoders do not work for individual sentences and they don't compute embeddings for individual texts.
 
 ## MS MARCO
